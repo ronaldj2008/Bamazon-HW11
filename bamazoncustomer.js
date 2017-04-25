@@ -15,16 +15,33 @@ var connection = mysql.createConnection({
   database: "Bamazon"
 });
 
-conncection.connect(function(err){
+connection.connect(function(err){
 	if(err) {
 		console.error("error connecting: " + err.stack);
 	}
-	makeTable();
+	createTable();
 });
 
 var createTable = function () {
 
-	connection.query("SELECT * products", function(err, res){
+	connection.query("SELECT * FROM products", function(err, res){
 		if (err) throw err;
-	})
-}
+
+		var tab = "\t";
+
+		console.log ("ItemID\tProduct Name\tDepartment Name\tPrice\t# In Stock");
+		console.log("------------------------------------------");
+
+		for (var i =0; i < res.length; i++) {
+			console.log(res[i].id + tab + res[i].product_name + tab + res[i].department_name + tab + res[i].price + tab + res[i].stock_quantity);
+		}
+		console.log("------------------------------------------");
+
+		promptCustomer(res);
+	});
+};
+
+// var promptCustomer = function(res) {
+
+// 	inquirer.prompt
+// }
