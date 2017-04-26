@@ -41,7 +41,85 @@ var createTable = function () {
 	});
 };
 
-// var promptCustomer = function(res) {
+var promptCustomer = function(res) {
 
-// 	inquirer.prompt
-// }
+	inquirer.prompt ([{
+		type:"input",
+		name: "choice",
+		message: "What would you like to buy? [Quit with Q]"
+	}]).then(function(val) {
+
+		var correct = false;
+
+		for (var i = 0; i < res.length; i++) {
+
+			if (res[i].product_name === val.choice) {
+				correct = true;
+				var product = val.choice;
+				var id = i;
+
+				inquirer.prompt ([{
+					type:"input",
+					name: "quant",
+					message: "How many do you need?"
+				}]).then(function(val) {
+
+					if ((res[id].stock_quantity - val.quant) > 0 {
+
+						connection.query (
+							"UPDATE products SET stock_quantity'" + (res[id].stock_quantity - val.quant) +
+								"'WHERE product_name='" + product + "'",
+								function (err, res2) {
+									if (err) {
+										throw err;
+									}
+
+									console.log("PURCHASE MADE!");
+
+									createTable();
+								});	
+							
+					}
+
+							else {
+								console.log("NOT A VALID SELECTION");
+								promptCustomer(res);
+							}
+				});
+			}	
+						if (val.choice === "Q" || val.choice === "q") {
+							process.exit();
+						}
+		}
+
+		if (i === res.length && correct === false) {
+
+			console.log("NOT A VALID SELECTION");
+			promptCustomer(res);
+		}
+	});
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
